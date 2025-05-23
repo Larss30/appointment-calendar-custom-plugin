@@ -4,7 +4,7 @@
 * Plugin Name: Appointment and Availability Calendar
 * Description: A plugin that allows caregivers and care recipients to book appointments and manage availability.
 * Version: 1.2
-* Author: MLK Marketing
+* Author: Larence
 **/
 
 defined('ABSPATH') or die('No script kiddies please!');
@@ -22,9 +22,17 @@ include_once(plugin_dir_path(__FILE__) . 'shortcodes/availability.php');
 
 $placeholder_profile = plugin_dir_url(__FILE__) . '../assets/images/profile-sample.png';
 
+function child_enqueue_styles() {
+
+    wp_enqueue_script('event-calendar-js', plugin_dir_url(__FILE__) . '/js/event-calendar.min.js', array(), null, true);
+    wp_enqueue_style('event-calendar-css', plugin_dir_url() . '/css/event-calendar/event-calendar.min.css', array(), null, 'all');
+
+}
+
+add_action( 'wp_enqueue_scripts', 'child_enqueue_styles', 15 );
+
 function mec_add_user_from_taxonomy_enqueue_scripts() {
     wp_enqueue_style('mec-add-user-from-taxonomy-style', plugin_dir_url(__FILE__) . 'css/styles.css');
-    wp_enqueue_script('custom-popup-script', plugin_dir_url(__FILE__) . '/js/custom-popup.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'mec_add_user_from_taxonomy_enqueue_scripts');
 
